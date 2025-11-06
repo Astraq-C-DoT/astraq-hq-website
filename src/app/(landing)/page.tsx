@@ -10,7 +10,6 @@ import { DocumentationSection } from "./_components/sections/documentation";
 import { EffortlessIntegration } from "./_components/sections/effortless-integration";
 import { FAQSection } from "./_components/sections/faq";
 import { NumbersThatSpeak } from "./_components/sections/numbers-that-speak";
-import { PricingSection } from "./_components/sections/pricing";
 import { SmartSimpleBrilliant } from "./_components/sections/smart-simple-brilliant";
 import { TestimonialsSection } from "./_components/sections/testimonials";
 import { YourWorkInSync } from "./_components/sections/your-work-in-sync";
@@ -126,10 +125,7 @@ export default function Page() {
                   alt=""
                   width={2808}
                   height={2808}
-                  className="w-[936px] sm:w-[1404px] md:w-[2106px] lg:w-[2808px] h-auto opacity-30 sm:opacity-40 md:opacity-50 mix-blend-multiply"
-                  style={{
-                    filter: "hue-rotate(15deg) saturate(0.7) brightness(1.2)",
-                  }}
+                  className="w-[936px] sm:w-[1404px] md:w-[2106px] lg:w-[2808px] h-auto opacity-30 sm:opacity-40 md:opacity-50 mix-blend-multiply hue-rotate-15 saturate-70 brightness-120"
                 />
               </div>
 
@@ -553,7 +549,6 @@ export default function Page() {
 
               <DocumentationSection />
               <TestimonialsSection />
-              <PricingSection />
               <FAQSection />
               <CTASection />
               <FooterSection />

@@ -8,7 +8,7 @@ export function CTASection() {
               <div
                 // biome-ignore lint/suspicious/noArrayIndexKey: we don't need a key here
                 key={i}
-                className="absolute h-4 w-full -rotate-45 origin-top-left outline-[0.5px] outline-[rgba(3,7,18,0.08)] outline-offset-[-0.25px]"
+                className="absolute h-4 -rotate-45 origin-top-left outline-[0.5px] outline-[rgba(3,7,18,0.08)] outline-offset-[-0.25px] -left-full w-[300%]"
                 style={{
                   top: `${i * 16 - 120}px`,
                   left: "-100%",

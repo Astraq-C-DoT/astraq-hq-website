@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { cn } from "@/lib/utils";
 
 interface EffortlessIntegrationProps {
   width?: number | string;
@@ -21,12 +22,10 @@ export function EffortlessIntegration({
 
   return (
     <div
-      className={className}
+      className={cn("relative overflow-hidden", className)}
       style={{
         width,
         height,
-        position: "relative",
-        overflow: "hidden",
         maskImage:
           "linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%)",
         WebkitMaskImage:
@@ -34,104 +33,61 @@ export function EffortlessIntegration({
       }}
     >
       <div
+        className="absolute inset-0 pointer-events-none z-10"
         style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
           background:
             "linear-gradient(to bottom, rgba(255,255,255,0.1) 0%, transparent 20%, transparent 80%, rgba(255,255,255,0.1) 100%)",
-          pointerEvents: "none",
-          zIndex: 10,
         }}
       />
 
       <div
+        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 rounded-full border opacity-80"
         style={{
-          position: "absolute",
-          left: "50%",
-          top: "50%",
-          transform: "translate(-50%, -50%)",
-          width: "320px",
-          height: "320px",
-          borderRadius: "50%",
-          border: "1px solid rgba(55, 50, 47, 0.2)",
-          opacity: 0.8,
+          borderColor: "rgba(55, 50, 47, 0.2)",
         }}
       />
       <div
+        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-60 h-60 rounded-full border opacity-70"
         style={{
-          position: "absolute",
-          left: "50%",
-          top: "50%",
-          transform: "translate(-50%, -50%)",
-          width: "240px",
-          height: "240px",
-          borderRadius: "50%",
-          border: "1px solid rgba(55, 50, 47, 0.25)",
-          opacity: 0.7,
+          borderColor: "rgba(55, 50, 47, 0.25)",
         }}
       />
       <div
+        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 rounded-full border opacity-60"
         style={{
-          position: "absolute",
-          left: "50%",
-          top: "50%",
-          transform: "translate(-50%, -50%)",
-          width: "160px",
-          height: "160px",
-          borderRadius: "50%",
-          border: "1px solid rgba(55, 50, 47, 0.3)",
-          opacity: 0.6,
+          borderColor: "rgba(55, 50, 47, 0.3)",
         }}
       />
 
       <div
+        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
         style={{
           width: "500px",
           height: "358px",
-          left: "50%",
-          top: "50%",
-          transform: "translate(-50%, -50%)",
-          position: "absolute",
         }}
       >
         <div
+          className="absolute flex items-center justify-center rounded-full font-bold text-white shadow-md"
           style={{
             width: "72px",
             height: "72px",
             left: `${centerX - 36}px`,
             top: `${centerY - 36}px`,
-            position: "absolute",
             background: "#37322f",
-            boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.15)",
-            borderRadius: "99px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
             fontFamily: "'Inter', sans-serif",
-            fontWeight: 700,
             fontSize: "32px",
-            color: "#ffffff",
+            boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.15)",
           }}
         >
           b
         </div>
 
         <div
+          className="absolute flex items-center justify-center w-8 h-8 rounded-full shadow-md bg-black"
           style={{
-            width: "32px",
-            height: "32px",
             left: `${getPositionOnRing(80, Math.PI).x - 16}px`,
             top: `${getPositionOnRing(80, Math.PI).y - 16}px`,
-            position: "absolute",
-            background: "#000000",
             boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.15)",
-            borderRadius: "50%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
           }}
         >
           <Image
@@ -147,18 +103,11 @@ export function EffortlessIntegration({
         </div>
 
         <div
+          className="absolute flex items-center justify-center w-8 h-8 rounded-full shadow-md bg-white"
           style={{
-            width: "32px",
-            height: "32px",
             left: `${getPositionOnRing(80, 0).x - 16}px`,
             top: `${getPositionOnRing(80, 0).y - 16}px`,
-            position: "absolute",
-            background: "#ffffff",
             boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.15)",
-            borderRadius: "50%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
           }}
         >
           <Image
@@ -171,18 +120,12 @@ export function EffortlessIntegration({
         </div>
 
         <div
+          className="absolute flex items-center justify-center w-8 h-8 rounded-full shadow-md"
           style={{
-            width: "32px",
-            height: "32px",
             left: `${getPositionOnRing(120, -Math.PI / 4).x - 16}px`,
             top: `${getPositionOnRing(120, -Math.PI / 4).y - 16}px`,
-            position: "absolute",
             background: "#EEEFE8",
             boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.15)",
-            borderRadius: "50%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
           }}
         >
           <Image
@@ -195,18 +138,12 @@ export function EffortlessIntegration({
         </div>
 
         <div
+          className="absolute flex items-center justify-center w-8 h-8 rounded-full shadow-md"
           style={{
-            width: "32px",
-            height: "32px",
             left: `${getPositionOnRing(120, (3 * Math.PI) / 4).x - 16}px`,
             top: `${getPositionOnRing(120, (3 * Math.PI) / 4).y - 16}px`,
-            position: "absolute",
             background: "#5865F2",
             boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.15)",
-            borderRadius: "50%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
           }}
         >
           <Image
@@ -222,18 +159,11 @@ export function EffortlessIntegration({
         </div>
 
         <div
+          className="absolute flex items-center justify-center w-8 h-8 rounded-full shadow-md bg-white"
           style={{
-            width: "32px",
-            height: "32px",
             left: `${getPositionOnRing(120, (5 * Math.PI) / 4).x - 16}px`,
             top: `${getPositionOnRing(120, (5 * Math.PI) / 4).y - 16}px`,
-            position: "absolute",
-            background: "#ffffff",
             boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.15)",
-            borderRadius: "50%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
           }}
         >
           <Image
@@ -246,18 +176,12 @@ export function EffortlessIntegration({
         </div>
 
         <div
+          className="absolute flex items-center justify-center w-8 h-8 rounded-full shadow-md"
           style={{
-            width: "32px",
-            height: "32px",
             left: `${getPositionOnRing(160, Math.PI).x - 16}px`,
             top: `${getPositionOnRing(160, Math.PI).y - 16}px`,
-            position: "absolute",
             background: "#635BFF",
             boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.15)",
-            borderRadius: "50%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
           }}
         >
           <Image
@@ -273,18 +197,11 @@ export function EffortlessIntegration({
         </div>
 
         <div
+          className="absolute flex items-center justify-center w-8 h-8 rounded-full shadow-md bg-black"
           style={{
-            width: "32px",
-            height: "32px",
             left: `${getPositionOnRing(160, 0).x - 16}px`,
             top: `${getPositionOnRing(160, 0).y - 16}px`,
-            position: "absolute",
-            background: "#000000",
             boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.15)",
-            borderRadius: "50%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
           }}
         >
           <Image
@@ -300,13 +217,7 @@ export function EffortlessIntegration({
         </div>
 
         <svg
-          style={{
-            position: "absolute",
-            inset: 0,
-            width: "100%",
-            height: "100%",
-            pointerEvents: "none",
-          }}
+          className="absolute inset-0 w-full h-full pointer-events-none"
           aria-label="Connection lines"
         >
           <title>Connection lines</title>

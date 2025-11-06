@@ -151,12 +151,9 @@ export function FooterSection() {
               <div
                 // biome-ignore lint/suspicious/noArrayIndexKey: we don't need a key here
                 key={i}
-                className="absolute w-[300px] h-16 border border-[rgba(3,7,18,0.08)]"
+                className="absolute w-[300px] h-16 border border-[rgba(3,7,18,0.08)] -rotate-45 origin-top-left -top-30"
                 style={{
                   left: `${i * 300 - 600}px`,
-                  top: "-120px",
-                  transform: "rotate(-45deg)",
-                  transformOrigin: "top left",
                 }}
               />
             ))}

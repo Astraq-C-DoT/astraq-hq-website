@@ -82,7 +82,7 @@ export function DocumentationSection() {
                   >
                     <div
                       key={animationKey}
-                      className="h-0.5 bg-[#322D2B] animate-[progressBar_5s_linear_forwards] will-change-transform"
+                      className="h-0.5 bg-[#322D2B] animate-progress-bar will-change-transform"
                     />
                   </div>
                   <div className="px-6 py-5 w-full flex flex-col gap-2">
@@ -113,17 +113,6 @@ export function DocumentationSection() {
           </div>
         </div>
       </div>
-
-      <style jsx>{`
-        @keyframes progressBar {
-          0% {
-            transform: translateX(-100%);
-          }
-          100% {
-            transform: translateX(0%);
-          }
-        }
-      `}</style>
     </div>
   );
 }

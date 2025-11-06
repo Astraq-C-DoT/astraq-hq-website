@@ -93,6 +93,19 @@
   }
 }
 
+@theme {
+  --animation-progress-bar: progress-bar 5s linear forwards;
+
+  @keyframes progress-bar {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(0%);
+    }
+  }
+}
+
 .backdrop-blur-custom {
   backdrop-filter: blur(8.25px);
 }

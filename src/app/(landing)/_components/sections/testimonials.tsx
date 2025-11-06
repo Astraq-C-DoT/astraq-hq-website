@@ -1,5 +1,6 @@
 "use client";
 
+import { ArrowLeftCircleIcon, ArrowRightCircleIcon } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
@@ -76,7 +77,7 @@ export function TestimonialsSection() {
               height={200}
               unoptimized
             />
-            <div className="flex-1 px-6 py-6 shadow-[0px_0px_0px_0.75px_rgba(50,45,43,0.12)] overflow-hidden flex flex-col justify-start items-start gap-6 shadow-none pb-0 pt-0">
+            <div className="flex-1 px-6 py-6 shadow-[0px_0px_0px_0.75px_rgba(50,45,43,0.12)] overflow-hidden flex flex-col justify-start items-start gap-6 pb-0 pt-0">
               <div
                 className="self-stretch justify-start flex flex-col text-[#49423D] text-2xl md:text-[32px] font-medium leading-10 md:leading-[42px] font-sans h-[200px] md:h-[210px] overflow-hidden line-clamp-5 transition-all duration-700 ease-in-out tracking-tight"
                 style={{
@@ -103,7 +104,7 @@ export function TestimonialsSection() {
             </div>
           </div>
 
-          <div className="pr-6 justify-start items-start gap-[14px] flex">
+          <div className="pr-6 justify-start items-start gap-3.5 flex">
             <button
               type="button"
               onClick={() =>
@@ -111,53 +112,21 @@ export function TestimonialsSection() {
                   (activeTestimonial - 1 + testimonials.length) % testimonials.length,
                 )
               }
-              className="w-9 h-9 shadow-[0px_1px_2px_rgba(0,0,0,0.08)] overflow-hidden rounded-full border border-[rgba(0,0,0,0.15)] justify-center items-center gap-2 flex hover:bg-gray-50 transition-colors"
+              className="size-9 shadow-[0px_1px_2px_rgba(0,0,0,0.08)] overflow-hidden rounded-full border border-[rgba(0,0,0,0.15)] justify-center items-center gap-2 flex hover:bg-gray-50 transition-colors"
               aria-label="Previous testimonial"
             >
-              <div className="w-6 h-6 relative overflow-hidden">
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  aria-label="Previous arrow"
-                >
-                  <title>Previous arrow</title>
-                  <path
-                    d="M15 18L9 12L15 6"
-                    stroke="#46413E"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
+              <div className="size-6 relative overflow-hidden">
+                <ArrowLeftCircleIcon className="size-6 text-[#46413E]" />
               </div>
             </button>
             <button
               type="button"
               onClick={() => handleNavigationClick((activeTestimonial + 1) % testimonials.length)}
-              className="w-9 h-9 shadow-[0px_1px_2px_rgba(0,0,0,0.08)] overflow-hidden rounded-full border border-[rgba(0,0,0,0.15)] justify-center items-center gap-2 flex hover:bg-gray-50 transition-colors"
+              className="size-9 shadow-[0px_1px_2px_rgba(0,0,0,0.08)] overflow-hidden rounded-full border border-[rgba(0,0,0,0.15)] justify-center items-center gap-2 flex hover:bg-gray-50 transition-colors"
               aria-label="Next testimonial"
             >
-              <div className="w-6 h-6 relative overflow-hidden">
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  aria-label="Next arrow"
-                >
-                  <title>Next arrow</title>
-                  <path
-                    d="M9 18L15 12L9 6"
-                    stroke="#46413E"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
+              <div className="size-6 relative overflow-hidden">
+                <ArrowRightCircleIcon className="size-6 text-[#46413E]" />
               </div>
             </button>
           </div>
