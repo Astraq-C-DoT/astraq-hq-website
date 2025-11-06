@@ -5,12 +5,9 @@ import { FixedToolbarFeature, lexicalEditor } from "@payloadcms/richtext-lexical
 import { buildConfig } from "payload";
 import sharp from "sharp";
 import { env } from "./env";
-import { Blog } from "./payload/collections/blog";
-import { Media } from "./payload/collections/media";
+import { collections } from "./payload/collections";
 import { Users } from "./payload/collections/users";
-import { Company } from "./payload/globals/company";
-import { Footer } from "./payload/globals/footer";
-import { Header } from "./payload/globals/header";
+import { globals } from "./payload/globals";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -23,8 +20,8 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Blog],
-  globals: [Company, Footer, Header],
+  collections,
+  globals,
   editor: lexicalEditor({
     features: ({ defaultFeatures }) => [...defaultFeatures, FixedToolbarFeature()],
   }),

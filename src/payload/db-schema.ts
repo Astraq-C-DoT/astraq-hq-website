@@ -131,6 +131,55 @@ export const blog = sqliteTable(
   ],
 );
 
+export const projects_images = sqliteTable(
+  "projects_images",
+  {
+    _order: integer("_order").notNull(),
+    _parentID: integer("_parent_id").notNull(),
+    id: text("id").primaryKey(),
+    image: integer("image_id").references(() => media.id, {
+      onDelete: "set null",
+    }),
+  },
+  (columns) => [
+    index("projects_images_order_idx").on(columns._order),
+    index("projects_images_parent_id_idx").on(columns._parentID),
+    index("projects_images_image_idx").on(columns.image),
+    foreignKey({
+      columns: [columns["_parentID"]],
+      foreignColumns: [projects.id],
+      name: "projects_images_parent_id_fk",
+    }).onDelete("cascade"),
+  ],
+);
+
+export const projects = sqliteTable(
+  "projects",
+  {
+    id: integer("id").primaryKey(),
+    title: text("title").notNull(),
+    description: text("description"),
+    thumbnailImage: integer("thumbnail_image_id").references(() => media.id, {
+      onDelete: "set null",
+    }),
+    publishedAt: text("published_at").default(
+      sql`(strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))`,
+    ),
+    client: text("client").notNull(),
+    updatedAt: text("updated_at")
+      .notNull()
+      .default(sql`(strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))`),
+    createdAt: text("created_at")
+      .notNull()
+      .default(sql`(strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))`),
+  },
+  (columns) => [
+    index("projects_thumbnail_image_idx").on(columns.thumbnailImage),
+    index("projects_updated_at_idx").on(columns.updatedAt),
+    index("projects_created_at_idx").on(columns.createdAt),
+  ],
+);
+
 export const payload_kv = sqliteTable(
   "payload_kv",
   {
@@ -170,6 +219,7 @@ export const payload_locked_documents_rels = sqliteTable(
     usersID: integer("users_id"),
     mediaID: integer("media_id"),
     blogID: integer("blog_id"),
+    projectsID: integer("projects_id"),
   },
   (columns) => [
     index("payload_locked_documents_rels_order_idx").on(columns.order),
@@ -178,6 +228,9 @@ export const payload_locked_documents_rels = sqliteTable(
     index("payload_locked_documents_rels_users_id_idx").on(columns.usersID),
     index("payload_locked_documents_rels_media_id_idx").on(columns.mediaID),
     index("payload_locked_documents_rels_blog_id_idx").on(columns.blogID),
+    index("payload_locked_documents_rels_projects_id_idx").on(
+      columns.projectsID,
+    ),
     foreignKey({
       columns: [columns["parent"]],
       foreignColumns: [payload_locked_documents.id],
@@ -197,6 +250,11 @@ export const payload_locked_documents_rels = sqliteTable(
       columns: [columns["blogID"]],
       foreignColumns: [blog.id],
       name: "payload_locked_documents_rels_blog_fk",
+    }).onDelete("cascade"),
+    foreignKey({
+      columns: [columns["projectsID"]],
+      foreignColumns: [projects.id],
+      name: "payload_locked_documents_rels_projects_fk",
     }).onDelete("cascade"),
   ],
 );
@@ -276,6 +334,21 @@ export const company = sqliteTable(
     logo: integer("logo_id").references(() => media.id, {
       onDelete: "set null",
     }),
+    email: text("email"),
+    phone: text("phone"),
+    website: text("website"),
+    address_line1: text("address_line1"),
+    address_line2: text("address_line2"),
+    address_city: text("address_city"),
+    address_state: text("address_state"),
+    address_postalCode: text("address_postal_code"),
+    address_country: text("address_country"),
+    social_facebook: text("social_facebook"),
+    social_twitter: text("social_twitter"),
+    social_linkedin: text("social_linkedin"),
+    social_instagram: text("social_instagram"),
+    social_github: text("social_github"),
+    social_youtube: text("social_youtube"),
     updatedAt: text("updated_at").default(
       sql`(strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))`,
     ),
@@ -365,6 +438,19 @@ export const header = sqliteTable("header", {
   ),
 });
 
+export const legal_pages = sqliteTable("legal_pages", {
+  id: integer("id").primaryKey(),
+  title: text("title").notNull(),
+  slug: text("slug").notNull(),
+  content: text("content", { mode: "json" }).notNull(),
+  updatedAt: text("updated_at").default(
+    sql`(strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))`,
+  ),
+  createdAt: text("created_at").default(
+    sql`(strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))`,
+  ),
+});
+
 export const relations_users_sessions = relations(
   users_sessions,
   ({ one }) => ({
@@ -393,6 +479,31 @@ export const relations_blog = relations(blog, ({ one }) => ({
     relationName: "author",
   }),
 }));
+export const relations_projects_images = relations(
+  projects_images,
+  ({ one }) => ({
+    _parentID: one(projects, {
+      fields: [projects_images._parentID],
+      references: [projects.id],
+      relationName: "images",
+    }),
+    image: one(media, {
+      fields: [projects_images.image],
+      references: [media.id],
+      relationName: "image",
+    }),
+  }),
+);
+export const relations_projects = relations(projects, ({ one, many }) => ({
+  thumbnailImage: one(media, {
+    fields: [projects.thumbnailImage],
+    references: [media.id],
+    relationName: "thumbnailImage",
+  }),
+  images: many(projects_images, {
+    relationName: "images",
+  }),
+}));
 export const relations_payload_kv = relations(payload_kv, () => ({}));
 export const relations_payload_locked_documents_rels = relations(
   payload_locked_documents_rels,
@@ -416,6 +527,11 @@ export const relations_payload_locked_documents_rels = relations(
       fields: [payload_locked_documents_rels.blogID],
       references: [blog.id],
       relationName: "blog",
+    }),
+    projectsID: one(projects, {
+      fields: [payload_locked_documents_rels.projectsID],
+      references: [projects.id],
+      relationName: "projects",
     }),
   }),
 );
@@ -501,12 +617,15 @@ export const relations_header = relations(header, ({ many }) => ({
     relationName: "links",
   }),
 }));
+export const relations_legal_pages = relations(legal_pages, () => ({}));
 
 type DatabaseSchema = {
   users_sessions: typeof users_sessions;
   users: typeof users;
   media: typeof media;
   blog: typeof blog;
+  projects_images: typeof projects_images;
+  projects: typeof projects;
   payload_kv: typeof payload_kv;
   payload_locked_documents: typeof payload_locked_documents;
   payload_locked_documents_rels: typeof payload_locked_documents_rels;
@@ -519,10 +638,13 @@ type DatabaseSchema = {
   footer: typeof footer;
   header_links: typeof header_links;
   header: typeof header;
+  legal_pages: typeof legal_pages;
   relations_users_sessions: typeof relations_users_sessions;
   relations_users: typeof relations_users;
   relations_media: typeof relations_media;
   relations_blog: typeof relations_blog;
+  relations_projects_images: typeof relations_projects_images;
+  relations_projects: typeof relations_projects;
   relations_payload_kv: typeof relations_payload_kv;
   relations_payload_locked_documents_rels: typeof relations_payload_locked_documents_rels;
   relations_payload_locked_documents: typeof relations_payload_locked_documents;
@@ -535,6 +657,7 @@ type DatabaseSchema = {
   relations_footer: typeof relations_footer;
   relations_header_links: typeof relations_header_links;
   relations_header: typeof relations_header;
+  relations_legal_pages: typeof relations_legal_pages;
 };
 
 declare module "@payloadcms/db-sqlite" {

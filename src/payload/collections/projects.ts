@@ -1,15 +1,7 @@
 import type { CollectionConfig } from "payload";
 
-export const Blog: CollectionConfig = {
-  slug: "blog",
-  access: {
-    read: () => true,
-  },
-  admin: {
-    useAsTitle: "title",
-    defaultColumns: ["title", "slug", "publishedAt"],
-    livePreview: {},
-  },
+export const Projects: CollectionConfig = {
+  slug: "projects",
   fields: [
     {
       name: "title",
@@ -17,13 +9,8 @@ export const Blog: CollectionConfig = {
       required: true,
     },
     {
-      name: "shortDescription",
+      name: "description",
       type: "textarea",
-    },
-    {
-      name: "content",
-      type: "richText",
-      required: true,
     },
     {
       name: "thumbnailImage",
@@ -41,10 +28,21 @@ export const Blog: CollectionConfig = {
       },
     },
     {
-      name: "author",
-      type: "relationship",
-      relationTo: "users",
-      hasMany: false,
+      name: "client",
+      type: "text",
+      required: true,
+    },
+    {
+      name: "images",
+      type: "array",
+      fields: [
+        {
+          name: "image",
+          type: "relationship",
+          relationTo: "media",
+          hasMany: false,
+        },
+      ],
     },
   ],
 };
