@@ -7,7 +7,6 @@ export const env = createEnv({
     DATABASE_AUTH_TOKEN: z.string(),
     PAYLOAD_SECRET: z.string(),
     TURNSTILE_SECRET_KEY: z.string(),
-    RESEND_API_KEY: z.string(),
   },
   client: {
     NEXT_PUBLIC_TURNSTILE_SITE_KEY: z.string(),
@@ -19,7 +18,6 @@ export const env = createEnv({
     PAYLOAD_SECRET: process.env.PAYLOAD_SECRET,
     TURNSTILE_SECRET_KEY: process.env.TURNSTILE_SECRET_KEY,
     NEXT_PUBLIC_TURNSTILE_SITE_KEY: process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY,
-    RESEND_API_KEY: process.env.RESEND_API_KEY,
     NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL,
   },
   skipValidation: !!process.env.SKIP_ENV_VALIDATION,

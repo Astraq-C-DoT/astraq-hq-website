@@ -14,7 +14,6 @@
   },
   "dependencies": {
     "@payloadcms/db-sqlite": "^3.63.0",
-    "@payloadcms/email-resend": "^3.63.0",
     "@payloadcms/next": "^3.63.0",
     "@payloadcms/richtext-lexical": "^3.63.0",
     "@t3-oss/env-nextjs": "^0.13.8",

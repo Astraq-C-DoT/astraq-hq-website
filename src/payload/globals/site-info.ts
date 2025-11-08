@@ -14,6 +14,11 @@ export const SiteInfo: GlobalConfig = {
       required: true,
     },
     {
+      name: "contactUsUrl",
+      type: "text",
+      required: true,
+    },
+    {
       name: "backedBy",
       type: "group",
       required: true,

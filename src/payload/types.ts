@@ -518,6 +518,7 @@ export interface SiteInfo {
   id: number;
   title: string;
   subtitle: string;
+  contactUsUrl: string;
   backedBy: {
     title: string;
     description: string;
@@ -643,6 +644,7 @@ export interface LegalPagesSelect<T extends boolean = true> {
 export interface SiteInfoSelect<T extends boolean = true> {
   title?: T;
   subtitle?: T;
+  contactUsUrl?: T;
   backedBy?:
     | T
     | {

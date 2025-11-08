@@ -1,8 +1,11 @@
 "use client";
 
-import { ChevronDownIcon } from "lucide-react";
-import { useState } from "react";
-import { cn } from "@/lib/utils";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import type { SiteInfo as SiteInfoType } from "@/payload/types";
 
 type FAQSectionProps = {
@@ -10,14 +13,6 @@ type FAQSectionProps = {
 };
 
 export function FAQSection({ siteInfo }: FAQSectionProps) {
-  const [openItems, setOpenItems] = useState<number[]>([]);
-
-  const toggleItem = (index: number) => {
-    setOpenItems((prev) =>
-      prev.includes(index) ? prev.filter((i) => i !== index) : [...prev, index],
-    );
-  };
-
   return (
     <div className="w-full flex justify-center items-start">
       <div className="flex-1 px-4 md:px-12 py-16 md:py-20 flex flex-col lg:flex-row justify-start items-start gap-6 lg:gap-12">
@@ -31,48 +26,24 @@ export function FAQSection({ siteInfo }: FAQSectionProps) {
         </div>
 
         <div className="w-full lg:flex-1 flex flex-col justify-center items-center">
-          <div className="w-full flex flex-col">
-            {siteInfo.faq.faqItems.map((item, index) => {
-              const isOpen = openItems.includes(index);
-
-              return (
-                <div
-                  key={item.question}
-                  className="w-full border-b border-foreground/20 overflow-hidden"
-                >
-                  <button
-                    type="button"
-                    onClick={() => toggleItem(index)}
-                    className="w-full px-5 py-[18px] flex justify-between items-center gap-5 text-left hover:bg-foreground/5 transition-colors duration-200"
-                    aria-expanded={isOpen}
-                  >
-                    <div className="flex-1 text-secondary-foreground text-base font-medium leading-6 font-sans">
-                      {item.question}
-                    </div>
-                    <div className="flex justify-center items-center">
-                      <ChevronDownIcon
-                        className={cn(
-                          "size-6 text-foreground/60 transition-transform duration-300 ease-in-out",
-                          isOpen ? "rotate-180" : "rotate-0",
-                        )}
-                      />
-                    </div>
-                  </button>
-
-                  <div
-                    className={cn(
-                      "overflow-hidden transition-all duration-300 ease-in-out",
-                      isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0",
-                    )}
-                  >
-                    <div className="px-5 pb-[18px] text-muted-foreground text-sm font-normal leading-6 font-sans">
-                      {item.answer}
-                    </div>
+          <Accordion type="multiple" className="w-full">
+            {siteInfo.faq.faqItems.map((item) => (
+              <AccordionItem
+                key={item.question}
+                value={item.question}
+                className="border-b border-foreground/20"
+              >
+                <AccordionTrigger className="px-5 py-[18px] hover:bg-foreground/5 transition-colors duration-200 hover:no-underline [&>svg]:size-6 [&>svg]:text-foreground/60">
+                  <div className="flex-1 text-secondary-foreground text-base font-medium leading-6 font-sans text-left">
+                    {item.question}
                   </div>
-                </div>
-              );
-            })}
-          </div>
+                </AccordionTrigger>
+                <AccordionContent className="px-5 pb-[18px] text-muted-foreground text-sm font-normal leading-6 font-sans">
+                  {item.answer}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
         </div>
       </div>
     </div>

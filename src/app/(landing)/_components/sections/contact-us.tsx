@@ -2,6 +2,7 @@
 
 import Script from "next/script";
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
 import { Field, FieldDescription, FieldGroup, FieldLabel, FieldSet } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -158,16 +159,17 @@ export function ContactUsSection() {
                 </div>
               )}
               <div className="flex justify-start items-center gap-4">
-                <button
+                <Button
                   type="submit"
                   disabled={isSubmitting}
-                  className="h-10 px-12 py-[6px] relative bg-primary shadow-[0px_0px_0px_2.5px_rgba(255,255,255,0.08)_inset] overflow-hidden rounded-full flex justify-center items-center cursor-pointer hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  variant="default"
+                  className="h-10 px-12 py-[6px] relative shadow-[0px_0px_0px_2.5px_rgba(255,255,255,0.08)_inset] overflow-hidden rounded-full"
                 >
                   <div className="w-44 h-[41px] absolute left-0 top-0 bg-linear-to-b from-[rgba(255,255,255,0)] to-[rgba(0,0,0,0.10)] mix-blend-multiply"></div>
                   <div className="flex flex-col justify-center text-primary-foreground text-[13px] font-medium leading-5 font-sans relative z-10">
                     {isSubmitting ? "Sending..." : "Send message"}
                   </div>
-                </button>
+                </Button>
               </div>
             </form>
           </div>
