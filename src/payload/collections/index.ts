@@ -2,6 +2,7 @@ import { Blog } from "./blog";
 import { LegalPages } from "./legal-pages";
 import { Media } from "./media";
 import { Products } from "./products";
+import { Submission } from "./submission";
 import { Users } from "./users";
 
-export const collections = [Users, Media, Blog, Products, LegalPages];
+export const collections = [Users, Media, Blog, Products, LegalPages, Submission];

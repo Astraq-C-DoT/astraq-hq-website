@@ -280,6 +280,24 @@ export const legal_pages = sqliteTable(
   ],
 );
 
+export const submissions = sqliteTable(
+  "submissions",
+  {
+    id: integer("id").primaryKey(),
+    name: text("name").notNull(),
+    email: text("email").notNull(),
+    company: text("company"),
+    message: text("message").notNull(),
+    createdAt: text("created_at")
+      .notNull()
+      .default(sql`(strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))`),
+    updatedAt: text("updated_at")
+      .notNull()
+      .default(sql`(strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))`),
+  },
+  (columns) => [index("submissions_updated_at_idx").on(columns.updatedAt)],
+);
+
 export const payload_kv = sqliteTable(
   "payload_kv",
   {
@@ -321,6 +339,7 @@ export const payload_locked_documents_rels = sqliteTable(
     blogID: integer("blog_id"),
     productsID: integer("products_id"),
     "legal-pagesID": integer("legal_pages_id"),
+    submissionsID: integer("submissions_id"),
   },
   (columns) => [
     index("payload_locked_documents_rels_order_idx").on(columns.order),
@@ -334,6 +353,9 @@ export const payload_locked_documents_rels = sqliteTable(
     ),
     index("payload_locked_documents_rels_legal_pages_id_idx").on(
       columns["legal-pagesID"],
+    ),
+    index("payload_locked_documents_rels_submissions_id_idx").on(
+      columns.submissionsID,
     ),
     foreignKey({
       columns: [columns["parent"]],
@@ -364,6 +386,11 @@ export const payload_locked_documents_rels = sqliteTable(
       columns: [columns["legal-pagesID"]],
       foreignColumns: [legal_pages.id],
       name: "payload_locked_documents_rels_legal_pages_fk",
+    }).onDelete("cascade"),
+    foreignKey({
+      columns: [columns["submissionsID"]],
+      foreignColumns: [submissions.id],
+      name: "payload_locked_documents_rels_submissions_fk",
     }).onDelete("cascade"),
   ],
 );
@@ -710,6 +737,7 @@ export const relations_products = relations(products, ({ one, many }) => ({
   }),
 }));
 export const relations_legal_pages = relations(legal_pages, () => ({}));
+export const relations_submissions = relations(submissions, () => ({}));
 export const relations_payload_kv = relations(payload_kv, () => ({}));
 export const relations_payload_locked_documents_rels = relations(
   payload_locked_documents_rels,
@@ -743,6 +771,11 @@ export const relations_payload_locked_documents_rels = relations(
       fields: [payload_locked_documents_rels["legal-pagesID"]],
       references: [legal_pages.id],
       relationName: "legal-pages",
+    }),
+    submissionsID: one(submissions, {
+      fields: [payload_locked_documents_rels.submissionsID],
+      references: [submissions.id],
+      relationName: "submissions",
     }),
   }),
 );
@@ -889,6 +922,7 @@ type DatabaseSchema = {
   products_images: typeof products_images;
   products: typeof products;
   legal_pages: typeof legal_pages;
+  submissions: typeof submissions;
   payload_kv: typeof payload_kv;
   payload_locked_documents: typeof payload_locked_documents;
   payload_locked_documents_rels: typeof payload_locked_documents_rels;
@@ -913,6 +947,7 @@ type DatabaseSchema = {
   relations_products_images: typeof relations_products_images;
   relations_products: typeof relations_products;
   relations_legal_pages: typeof relations_legal_pages;
+  relations_submissions: typeof relations_submissions;
   relations_payload_kv: typeof relations_payload_kv;
   relations_payload_locked_documents_rels: typeof relations_payload_locked_documents_rels;
   relations_payload_locked_documents: typeof relations_payload_locked_documents;

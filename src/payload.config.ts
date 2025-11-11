@@ -1,6 +1,7 @@
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { sqliteAdapter } from "@payloadcms/db-sqlite";
+import { integer, sqliteTable } from "@payloadcms/db-sqlite/drizzle/sqlite-core";
 import {
   FixedToolbarFeature,
   lexicalEditor,
@@ -41,6 +42,12 @@ export default buildConfig({
     },
     generateSchemaOutputFile: path.resolve(dirname, "payload", "db-schema.ts"),
     migrationDir: path.resolve(dirname, "payload", "migrations"),
+    beforeSchemaInit: [
+      ({ schema }) => ({
+        ...schema,
+        submissions: {},
+      }),
+    ],
   }),
   sharp,
   plugins: [

@@ -1,5 +1,9 @@
 "use server";
 
+import config from "@payload-config";
+import { getPayload } from "payload";
+import { Resend } from "resend";
+import ContactUs from "@/components/email-templates/contact-us";
 import { env } from "@/env";
 
 type ContactFormData = {
@@ -14,6 +18,8 @@ type ContactFormResult = {
   success: boolean;
   error?: string;
 };
+
+const resend = new Resend(env.RESEND_API_KEY);
 
 export async function submitContactForm(formData: FormData): Promise<ContactFormResult> {
   try {
@@ -65,6 +71,35 @@ export async function submitContactForm(formData: FormData): Promise<ContactForm
     // TODO: Process the contact form submission (e.g., send email, save to database)
     // For now, we'll just return success
     // You can integrate with your email service (Resend) or database here
+
+    const payload = await getPayload({ config });
+
+    await payload.create({
+      collection: "submissions",
+      data: {
+        name: data.name,
+        email: data.email,
+        company: data.company,
+        message: data.message,
+      },
+    });
+
+    const company = await payload.findGlobal({
+      slug: "company",
+    });
+
+    await resend.emails.send({
+      from: "noreply@astraqcyberdefence.com",
+      to: data.email,
+      subject: "Thank you for contacting Astraq Cyber Defence",
+      react: ContactUs({
+        name: data.name,
+        companyName: company.name,
+        siteUrl: env.NEXT_PUBLIC_SITE_URL,
+        supportEmail: company.email ?? "",
+        supportPhone: company.phone ?? undefined,
+      }),
+    });
 
     return {
       success: true,
