@@ -96,20 +96,20 @@ export default async function Page({ params }: PageProps<"/blog/[slug]">) {
             <div className="flex w-full flex-col items-center justify-start px-2 pt-16 pr-0 pb-8 pl-0 sm:px-4 sm:pt-20 sm:pr-0 sm:pb-12 sm:pl-0 md:px-8 md:pt-24 md:pb-16 lg:px-0 lg:pt-[216px]">
               <article className="flex w-full max-w-3xl flex-col gap-6">
                 <header className="flex flex-col gap-4">
-                  <h1 className="font-bold text-4xl text-secondary-foreground md:text-5xl">
+                  <h1 className="font-bold font-serif text-4xl text-secondary-foreground md:text-5xl">
                     {blog.title}
                   </h1>
                   {blog.shortDescription && (
                     <p className="text-muted-foreground text-xl">{blog.shortDescription}</p>
                   )}
-                  <div className="flex flex-col gap-2 text-foreground/60 text-sm">
+                  <div className="flex gap-1 text-foreground/60 text-sm">
+                    {blog.author && typeof blog.author !== "number" && blog.author.email && (
+                      <div>By {blog.author.displayName}</div>
+                    )}
                     {blog.publishedAt && (
                       <time dateTime={blog.publishedAt}>
-                        Published: {new Date(blog.publishedAt).toLocaleDateString()}
+                        on {new Date(blog.publishedAt).toLocaleDateString()}
                       </time>
-                    )}
-                    {blog.author && typeof blog.author !== "number" && blog.author.email && (
-                      <div>Author: {blog.author.email}</div>
                     )}
                   </div>
                 </header>
