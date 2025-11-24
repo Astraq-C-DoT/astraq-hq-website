@@ -1,6 +1,7 @@
 import type { CollectionConfig } from "payload";
 import { slugField } from "payload";
 import { env } from "@/env";
+import { revalidateBlog, revalidateBlogDelete } from "../utils/revalidate";
 
 export const Blog: CollectionConfig = {
   slug: "blog",
@@ -16,6 +17,10 @@ export const Blog: CollectionConfig = {
     livePreview: {
       url: ({ data }) => `${env.NEXT_PUBLIC_SITE_URL}/blog/${data.slug}/preview`,
     },
+  },
+  hooks: {
+    afterChange: [revalidateBlog],
+    afterDelete: [revalidateBlogDelete],
   },
   fields: [
     {

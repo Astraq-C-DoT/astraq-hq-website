@@ -1,7 +1,11 @@
 import type { GlobalConfig } from "payload";
+import { revalidateSiteInfo } from "../utils/revalidate";
 
 export const SiteInfo: GlobalConfig = {
   slug: "siteInfo",
+  hooks: {
+    afterChange: [revalidateSiteInfo],
+  },
   fields: [
     {
       name: "title",

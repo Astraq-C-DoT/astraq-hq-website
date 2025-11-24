@@ -1,8 +1,13 @@
 import type { CollectionConfig } from "payload";
 import { slugField } from "payload";
+import { revalidateProduct, revalidateProductDelete } from "../utils/revalidate";
 
 export const Products: CollectionConfig = {
   slug: "products",
+  hooks: {
+    afterChange: [revalidateProduct],
+    afterDelete: [revalidateProductDelete],
+  },
   fields: [
     {
       name: "title",

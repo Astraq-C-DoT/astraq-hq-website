@@ -1,7 +1,11 @@
 import type { GlobalConfig } from "payload";
+import { revalidateCompany } from "../utils/revalidate";
 
 export const Company: GlobalConfig = {
   slug: "company",
+  hooks: {
+    afterChange: [revalidateCompany],
+  },
   fields: [
     {
       name: "name",

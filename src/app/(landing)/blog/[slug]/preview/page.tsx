@@ -7,6 +7,8 @@ import { notFound } from "next/navigation";
 import { getPayload } from "payload";
 import { RefreshRouteOnSave } from "./_components/refresh-route-on-save";
 
+export const dynamic = "force-dynamic";
+
 export async function generateMetadata(): Promise<Metadata> {
   return {
     title: "Blog Preview",
