@@ -27,7 +27,7 @@ export default async function Page() {
     "@type": "CollectionPage",
     name: "Services",
     description: "Explore our services",
-    url: `${env.NEXT_PUBLIC_SITE_URL}/services`,
+    url: `${env.APP_URL}/services`,
     mainEntity: {
       "@type": "ItemList",
       itemListElement: services.docs.map((service, index) => ({
@@ -37,7 +37,7 @@ export default async function Page() {
           "@type": "Service",
           name: service.title,
           description: service.description ?? undefined,
-          url: `${env.NEXT_PUBLIC_SITE_URL}/services/${service.slug}`,
+          url: `${env.APP_URL}/services/${service.slug}`,
         },
       })),
     },

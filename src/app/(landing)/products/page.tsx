@@ -33,7 +33,7 @@ export default async function Page() {
     "@type": "CollectionPage",
     name: "Products",
     description: "Explore our products",
-    url: `${env.NEXT_PUBLIC_SITE_URL}/products`,
+    url: `${env.APP_URL}/products`,
     mainEntity: {
       "@type": "ItemList",
       itemListElement: products.docs.map((product, index) => ({
@@ -43,7 +43,7 @@ export default async function Page() {
           "@type": "Product",
           name: product.title,
           description: product.description ?? undefined,
-          url: `${env.NEXT_PUBLIC_SITE_URL}/products/${product.slug}`,
+          url: `${env.APP_URL}/products/${product.slug}`,
         },
       })),
     },

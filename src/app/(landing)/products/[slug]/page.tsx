@@ -69,7 +69,7 @@ export default async function Page({ params }: PageProps<"/products/[slug]">) {
     "@type": "Product",
     name: product.title,
     description: product.description ?? undefined,
-    url: `${env.NEXT_PUBLIC_SITE_URL}/products/${product.slug}`,
+    url: `${env.APP_URL}/products/${product.slug}`,
     ...(product.thumbnailImage &&
       typeof product.thumbnailImage !== "number" &&
       product.thumbnailImage.url && {

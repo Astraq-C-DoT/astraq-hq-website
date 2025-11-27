@@ -7,7 +7,7 @@ import { env } from "@/env";
 
 async function callRevalidateAPI(paths: Array<{ path: string; type?: "page" | "layout" }>) {
   try {
-    const response = await fetch(`${env.NEXT_PUBLIC_SITE_URL}/api/revalidate`, {
+    const response = await fetch(`${env.APP_URL}/api/revalidate`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

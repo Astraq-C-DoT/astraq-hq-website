@@ -33,7 +33,7 @@ export default async function Page() {
     "@type": "Organization",
     name: company.name,
     description: company.description,
-    url: company.website ?? env.NEXT_PUBLIC_SITE_URL,
+    url: company.website ?? env.APP_URL,
     ...(company.email && {
       email: company.email,
     }),
@@ -76,7 +76,7 @@ export default async function Page() {
     "@type": "WebSite",
     name: siteInfo.title,
     description: siteInfo.subtitle,
-    url: env.NEXT_PUBLIC_SITE_URL,
+    url: env.APP_URL,
     publisher: {
       "@type": "Organization",
       name: company.name,

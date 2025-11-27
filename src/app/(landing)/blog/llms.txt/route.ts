@@ -17,7 +17,7 @@ export async function GET() {
   });
 
   const lines = blogs.docs.map((blog) => {
-    const url = `${env.NEXT_PUBLIC_SITE_URL}/blog/${blog.slug}`;
+    const url = `${env.APP_URL}/blog/${blog.slug}`;
     return `${blog.title} - ${url}`;
   });
 

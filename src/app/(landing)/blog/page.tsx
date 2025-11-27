@@ -33,13 +33,13 @@ export default async function Page() {
     "@type": "Blog",
     name: "Blog",
     description: "Read our latest blog posts",
-    url: `${env.NEXT_PUBLIC_SITE_URL}/blogs`,
+    url: `${env.APP_URL}/blogs`,
     blogPost: blogs.docs.map((blog) => ({
       "@type": "BlogPosting",
       headline: blog.title,
       description: blog.shortDescription ?? undefined,
       datePublished: blog.publishedAt ?? undefined,
-      url: `${env.NEXT_PUBLIC_SITE_URL}/blog/${blog.id}`,
+      url: `${env.APP_URL}/blog/${blog.id}`,
     })),
   };
 

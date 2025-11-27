@@ -12,7 +12,7 @@ export const Services: CollectionConfig = {
     useAsTitle: "title",
     defaultColumns: ["title", "slug"],
     livePreview: {
-      url: ({ data }) => `${env.NEXT_PUBLIC_SITE_URL}/services/${data.slug}/preview`,
+      url: ({ data }) => `${env.APP_URL}/services/${data.slug}/preview`,
     },
   },
   hooks: {

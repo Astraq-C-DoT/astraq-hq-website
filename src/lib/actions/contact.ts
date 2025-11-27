@@ -95,7 +95,7 @@ export async function submitContactForm(formData: FormData): Promise<ContactForm
       react: ContactUs({
         name: data.name,
         companyName: company.name,
-        siteUrl: env.NEXT_PUBLIC_SITE_URL,
+        siteUrl: env.APP_URL,
         supportEmail: company.email ?? "",
         supportPhone: company.phone ?? undefined,
       }),

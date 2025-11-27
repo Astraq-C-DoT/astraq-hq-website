@@ -78,7 +78,7 @@ export default async function Page({ params }: PageProps<"/services/[slug]">) {
     "@type": "Service",
     name: service.title,
     description: service.description ?? undefined,
-    url: `${env.NEXT_PUBLIC_SITE_URL}/services/${service.slug}`,
+    url: `${env.APP_URL}/services/${service.slug}`,
     ...(service.illustration &&
       typeof service.illustration !== "number" &&
       service.illustration.url && {

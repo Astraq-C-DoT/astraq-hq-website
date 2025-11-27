@@ -70,7 +70,7 @@ export default async function Page({ params }: PageProps<"/blog/[slug]">) {
     description: blog.shortDescription ?? undefined,
     datePublished: blog.publishedAt ?? undefined,
     dateModified: blog.updatedAt ?? undefined,
-    url: `${env.NEXT_PUBLIC_SITE_URL}/blog/${blog.slug}`,
+    url: `${env.APP_URL}/blog/${blog.slug}`,
     ...(blog.thumbnailImage &&
       typeof blog.thumbnailImage !== "number" &&
       blog.thumbnailImage.url && {

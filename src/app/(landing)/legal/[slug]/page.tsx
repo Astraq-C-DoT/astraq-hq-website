@@ -62,7 +62,7 @@ export default async function Page({ params }: PageProps<"/legal/[slug]">) {
     "@context": "https://schema.org",
     "@type": "WebPage",
     name: legalPage.title,
-    url: `${env.NEXT_PUBLIC_SITE_URL}/legal/${legalPage.slug}`,
+    url: `${env.APP_URL}/legal/${legalPage.slug}`,
     datePublished: legalPage.createdAt ?? undefined,
     dateModified: legalPage.updatedAt ?? undefined,
   };

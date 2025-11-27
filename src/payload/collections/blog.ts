@@ -15,7 +15,7 @@ export const Blog: CollectionConfig = {
     useAsTitle: "title",
     defaultColumns: ["title", "slug", "publishedAt"],
     livePreview: {
-      url: ({ data }) => `${env.NEXT_PUBLIC_SITE_URL}/blog/${data.slug}/preview`,
+      url: ({ data }) => `${env.APP_URL}/blog/${data.slug}/preview`,
     },
   },
   hooks: {
