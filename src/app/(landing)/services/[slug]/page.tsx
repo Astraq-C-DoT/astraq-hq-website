@@ -9,6 +9,8 @@ import type { Service as ServiceSchema, WithContext } from "schema-dts";
 import { env } from "@/env";
 import type { Product as ProductType } from "@/payload/types";
 
+export const revalidate = 7200;
+
 export async function generateMetadata({
   params,
 }: PageProps<"/services/[slug]">): Promise<Metadata> {

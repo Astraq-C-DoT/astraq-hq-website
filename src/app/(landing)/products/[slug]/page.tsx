@@ -7,6 +7,8 @@ import { getPayload } from "payload";
 import type { Product as ProductSchema, WithContext } from "schema-dts";
 import { env } from "@/env";
 
+export const revalidate = 7200;
+
 export async function generateMetadata({
   params,
 }: PageProps<"/products/[slug]">): Promise<Metadata> {

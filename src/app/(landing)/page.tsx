@@ -12,6 +12,8 @@ import { ProductsSection } from "./_components/sections/products";
 import { ServicesSection } from "./_components/sections/services";
 import { TestimonialsSection } from "./_components/sections/testimonials";
 
+export const revalidate = 7200;
+
 export async function generateMetadata(): Promise<Metadata> {
   const payload = await getPayload({ config });
   const siteInfo = await payload.findGlobal({ slug: "siteInfo" });

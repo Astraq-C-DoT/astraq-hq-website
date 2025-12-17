@@ -8,6 +8,8 @@ import { RichText } from "@/components/rich-text";
 import { env } from "@/env";
 import { LegalHeader } from "./_components/header";
 
+export const revalidate = 7200;
+
 export async function generateMetadata({ params }: PageProps<"/legal/[slug]">): Promise<Metadata> {
   const { slug } = await params;
   const payload = await getPayload({ config });

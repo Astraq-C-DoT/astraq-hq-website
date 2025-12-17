@@ -8,6 +8,8 @@ import type { BlogPosting, WithContext } from "schema-dts";
 import { RichText } from "@/components/rich-text";
 import { env } from "@/env";
 
+export const revalidate = 7200;
+
 export async function generateMetadata({ params }: PageProps<"/blog/[slug]">): Promise<Metadata> {
   const { slug } = await params;
 
