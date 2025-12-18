@@ -4,6 +4,7 @@ import Script from "next/script";
 import { getPayload } from "payload";
 import type { Graph, Organization, WebSite } from "schema-dts";
 import { env } from "@/env";
+import { getImageUrl } from "@/lib/utils";
 import { BackedBySection } from "./_components/sections/backed-by";
 import { ContactUsSection } from "./_components/sections/contact-us";
 import { FAQSection } from "./_components/sections/faq";
@@ -51,11 +52,9 @@ export default async function Page() {
     ...(company.phone && {
       telephone: company.phone,
     }),
-    ...(company.logo &&
-      typeof company.logo !== "number" &&
-      company.logo.url && {
-        logo: company.logo.url,
-      }),
+    ...(company.logo && {
+      logo: getImageUrl(company.logo) ?? "",
+    }),
     ...(company.address && {
       address: {
         "@type": "PostalAddress",

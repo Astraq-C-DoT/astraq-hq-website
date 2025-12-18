@@ -5,6 +5,7 @@ import { headers } from "next/headers";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { getPayload } from "payload";
+import { getImageUrl } from "@/lib/utils";
 import { RefreshRouteOnSave } from "./_components/refresh-route-on-save";
 
 export const dynamic = "force-dynamic";
@@ -84,17 +85,15 @@ export default async function Page({ params }: PageProps<"/blog/[slug]/preview">
                     </div>
                   </header>
 
-                  {blog.thumbnailImage &&
-                    typeof blog.thumbnailImage !== "number" &&
-                    blog.thumbnailImage.url && (
-                      <Image
-                        src={blog.thumbnailImage.url}
-                        alt={blog.title}
-                        width={1060}
-                        height={1060}
-                        className="h-auto w-full rounded-lg"
-                      />
-                    )}
+                  {blog.thumbnailImage && (
+                    <Image
+                      src={getImageUrl(blog.thumbnailImage) ?? ""}
+                      alt={blog.title}
+                      width={1060}
+                      height={1060}
+                      className="h-auto w-full rounded-lg"
+                    />
+                  )}
 
                   <div className="prose prose-lg max-w-none whitespace-pre-wrap">{markdown}</div>
                 </article>

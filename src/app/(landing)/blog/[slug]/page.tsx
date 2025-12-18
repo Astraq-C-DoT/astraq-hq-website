@@ -7,6 +7,7 @@ import { getPayload } from "payload";
 import type { BlogPosting, WithContext } from "schema-dts";
 import { RichText } from "@/components/rich-text";
 import { env } from "@/env";
+import { getImageUrl } from "@/lib/utils";
 
 export const revalidate = 7200;
 
@@ -58,6 +59,7 @@ export default async function Page({ params }: PageProps<"/blog/[slug]">) {
       },
     },
     limit: 1,
+    depth: 2,
   });
   const blog = result.docs[0];
 
@@ -73,11 +75,9 @@ export default async function Page({ params }: PageProps<"/blog/[slug]">) {
     datePublished: blog.publishedAt ?? undefined,
     dateModified: blog.updatedAt ?? undefined,
     url: `${env.APP_URL}/blog/${blog.slug}`,
-    ...(blog.thumbnailImage &&
-      typeof blog.thumbnailImage !== "number" &&
-      blog.thumbnailImage.url && {
-        image: blog.thumbnailImage.url,
-      }),
+    ...(blog.thumbnailImage && {
+      image: getImageUrl(blog.thumbnailImage) ?? "",
+    }),
     ...(blog.author &&
       typeof blog.author !== "number" &&
       blog.author.email && {
@@ -116,17 +116,15 @@ export default async function Page({ params }: PageProps<"/blog/[slug]">) {
                   </div>
                 </header>
 
-                {blog.thumbnailImage &&
-                  typeof blog.thumbnailImage !== "number" &&
-                  blog.thumbnailImage.url && (
-                    <Image
-                      src={blog.thumbnailImage.url}
-                      alt={blog.title}
-                      width={1060}
-                      height={1060}
-                      className="h-auto w-full rounded-lg"
-                    />
-                  )}
+                {blog.thumbnailImage && (
+                  <Image
+                    src={getImageUrl(blog.thumbnailImage) ?? ""}
+                    alt={blog.title}
+                    width={1060}
+                    height={1060}
+                    className="h-auto w-full rounded-lg"
+                  />
+                )}
 
                 <RichText data={blog.content} />
               </article>

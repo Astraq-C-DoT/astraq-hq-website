@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { IconBadge } from "@/components/icon-badge";
-import { cn } from "@/lib/utils";
+import { cn, getImageUrl } from "@/lib/utils";
 import type { SiteInfo as SiteInfoType } from "@/payload/types";
 
 type BackedBySectionProps = {
@@ -106,11 +106,7 @@ export function BackedBySection({ siteInfo }: BackedBySectionProps) {
               >
                 <div className="relative h-6 xs:h-7 w-6 xs:w-7 overflow-hidden rounded-full shadow-[0px_-4px_8px_rgba(255,255,255,0.64)_inset] sm:h-8 sm:w-8 md:h-9 md:w-9 lg:h-10 lg:w-10">
                   <Image
-                    src={
-                      typeof backer.logo === "number"
-                        ? `/api/media/${backer.logo}`
-                        : (backer.logo.url ?? "")
-                    }
+                    src={getImageUrl(backer.logo) ?? ""}
                     alt={backer.name}
                     width={40}
                     height={40}

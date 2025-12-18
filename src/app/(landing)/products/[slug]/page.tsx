@@ -6,6 +6,7 @@ import Script from "next/script";
 import { getPayload } from "payload";
 import type { Product as ProductSchema, WithContext } from "schema-dts";
 import { env } from "@/env";
+import { getImageUrl } from "@/lib/utils";
 
 export const revalidate = 7200;
 
@@ -72,11 +73,9 @@ export default async function Page({ params }: PageProps<"/products/[slug]">) {
     name: product.title,
     description: product.description ?? undefined,
     url: `${env.APP_URL}/products/${product.slug}`,
-    ...(product.thumbnailImage &&
-      typeof product.thumbnailImage !== "number" &&
-      product.thumbnailImage.url && {
-        image: product.thumbnailImage.url,
-      }),
+    ...(product.thumbnailImage && {
+      image: getImageUrl(product.thumbnailImage) ?? "",
+    }),
   };
 
   return (
@@ -105,28 +104,24 @@ export default async function Page({ params }: PageProps<"/products/[slug]">) {
                   </div>
                 </header>
 
-                {product.thumbnailImage &&
-                  typeof product.thumbnailImage !== "number" &&
-                  product.thumbnailImage.url && (
-                    <Image
-                      src={product.thumbnailImage.url}
-                      alt={product.title}
-                      width={1060}
-                      height={1060}
-                      className="h-auto w-full rounded-lg"
-                    />
-                  )}
+                <Image
+                  src={getImageUrl(product.thumbnailImage) ?? ""}
+                  alt={product.title}
+                  width={1060}
+                  height={1060}
+                  className="h-auto w-full rounded-lg"
+                />
 
                 {product.images && product.images.length > 0 && (
                   <div className="flex flex-col gap-4">
                     {product.images.map((imageItem, index) => {
-                      const image = typeof imageItem.image !== "number" ? imageItem.image : null;
-                      if (!image?.url) return null;
+                      const imageUrl = getImageUrl(imageItem.image);
+                      if (!imageUrl) return null;
                       return (
                         <Image
                           // biome-ignore lint/suspicious/noArrayIndexKey: This is a valid use case
                           key={index}
-                          src={image.url}
+                          src={imageUrl}
                           alt={`${product.title} - Image ${index + 1}`}
                           width={1060}
                           height={1060}

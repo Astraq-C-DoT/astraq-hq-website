@@ -6,6 +6,7 @@ import Script from "next/script";
 import { getPayload } from "payload";
 import type { CollectionPage, WithContext } from "schema-dts";
 import { env } from "@/env";
+import { getImageUrl } from "@/lib/utils";
 
 export const revalidate = 7200;
 
@@ -73,17 +74,13 @@ export default async function Page() {
                 key={product.id}
                 className="flex flex-col gap-4 rounded-lg border border-border p-6 transition-shadow hover:shadow-lg"
               >
-                {product.thumbnailImage &&
-                  typeof product.thumbnailImage !== "number" &&
-                  product.thumbnailImage.url && (
-                    <Image
-                      src={product.thumbnailImage.url}
-                      alt={product.title}
-                      width={480}
-                      height={192}
-                      className="h-48 w-full rounded object-cover"
-                    />
-                  )}
+                <Image
+                  src={getImageUrl(product.thumbnailImage) ?? ""}
+                  alt={product.title}
+                  width={480}
+                  height={192}
+                  className="h-48 w-full rounded object-cover"
+                />
                 <div className="flex flex-col gap-2">
                   <h2 className="font-semibold text-2xl text-secondary-foreground">
                     {product.title}

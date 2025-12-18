@@ -7,6 +7,7 @@ import Script from "next/script";
 import { getPayload } from "payload";
 import type { Service as ServiceSchema, WithContext } from "schema-dts";
 import { env } from "@/env";
+import { getImageUrl } from "@/lib/utils";
 import type { Product as ProductType } from "@/payload/types";
 
 export const revalidate = 7200;
@@ -81,11 +82,9 @@ export default async function Page({ params }: PageProps<"/services/[slug]">) {
     name: service.title,
     description: service.description ?? undefined,
     url: `${env.APP_URL}/services/${service.slug}`,
-    ...(service.illustration &&
-      typeof service.illustration !== "number" &&
-      service.illustration.url && {
-        image: service.illustration.url,
-      }),
+    ...(service.illustration && {
+      image: getImageUrl(service.illustration) ?? "",
+    }),
   };
 
   return (
@@ -106,17 +105,15 @@ export default async function Page({ params }: PageProps<"/services/[slug]">) {
                   )}
                 </header>
 
-                {service.illustration &&
-                  typeof service.illustration !== "number" &&
-                  service.illustration.url && (
-                    <Image
-                      src={service.illustration.url}
-                      alt={service.title}
-                      width={1060}
-                      height={1060}
-                      className="h-auto w-full rounded-lg"
-                    />
-                  )}
+                {service.illustration && (
+                  <Image
+                    src={getImageUrl(service.illustration) ?? ""}
+                    alt={service.title}
+                    width={1060}
+                    height={1060}
+                    className="h-auto w-full rounded-lg"
+                  />
+                )}
 
                 {relatedProducts.length > 0 && (
                   <div className="flex flex-col gap-4">
@@ -130,17 +127,15 @@ export default async function Page({ params }: PageProps<"/services/[slug]">) {
                           href={`/products/${product.slug}`}
                           className="flex flex-col gap-2 rounded-lg border border-border p-4 transition-shadow hover:shadow-lg"
                         >
-                          {product.thumbnailImage &&
-                            typeof product.thumbnailImage !== "number" &&
-                            product.thumbnailImage.url && (
-                              <Image
-                                src={product.thumbnailImage.url}
-                                alt={product.title}
-                                width={400}
-                                height={200}
-                                className="h-32 w-full rounded object-cover"
-                              />
-                            )}
+                          {product.thumbnailImage && (
+                            <Image
+                              src={getImageUrl(product.thumbnailImage) ?? ""}
+                              alt={product.title}
+                              width={400}
+                              height={200}
+                              className="h-32 w-full rounded object-cover"
+                            />
+                          )}
                           <h3 className="font-semibold text-lg text-secondary-foreground">
                             {product.title}
                           </h3>

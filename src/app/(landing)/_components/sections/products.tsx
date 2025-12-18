@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { cn } from "@/lib/utils";
+import { cn, getImageUrl } from "@/lib/utils";
 import type { Product } from "@/payload/types";
 import { FeatureCard } from "../feature-card";
 
@@ -55,22 +55,6 @@ export function ProductsSection({ products }: ProductsSectionProps) {
     return null;
   }
 
-  const getProductImage = (product: Product): string | null => {
-    const firstImage = product.images?.[0];
-    if (firstImage?.image && typeof firstImage.image !== "number" && firstImage.image.url) {
-      return firstImage.image.url;
-    }
-
-    if (
-      product.thumbnailImage &&
-      typeof product.thumbnailImage !== "number" &&
-      product.thumbnailImage.url
-    ) {
-      return product.thumbnailImage.url;
-    }
-    return null;
-  };
-
   return (
     <>
       <div className="relative z-5 my-8 mb-0 flex w-full max-w-[960px] flex-col items-center justify-center gap-2 px-2 pt-2 pb-6 sm:my-12 sm:px-4 sm:pt-4 sm:pb-8 md:my-16 md:px-6 md:pb-10 lg:my-16 lg:w-[960px] lg:px-11 lg:pb-0">
@@ -79,7 +63,8 @@ export function ProductsSection({ products }: ProductsSectionProps) {
             <div className="flex h-full w-full items-center justify-center">
               <div className="relative h-full w-full overflow-hidden">
                 {products.map((product, index) => {
-                  const imageUrl = getProductImage(product);
+                  const firstImage = product.images?.[0]?.image;
+                  const imageUrl = getImageUrl(firstImage) ?? getImageUrl(product.thumbnailImage);
                   if (!imageUrl) return null;
 
                   return (

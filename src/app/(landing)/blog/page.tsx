@@ -6,6 +6,7 @@ import Script from "next/script";
 import { getPayload } from "payload";
 import type { Blog, WithContext } from "schema-dts";
 import { env } from "@/env";
+import { getImageUrl } from "@/lib/utils";
 
 export const revalidate = 7200;
 
@@ -28,6 +29,7 @@ export default async function Page() {
     },
     sort: "-publishedAt",
     limit: 100,
+    depth: 2,
   });
 
   const blogSchema: WithContext<Blog> = {
@@ -67,17 +69,15 @@ export default async function Page() {
                 key={blog.id}
                 className="flex flex-col gap-4 rounded-lg border border-border p-6 transition-shadow hover:shadow-lg"
               >
-                {blog.thumbnailImage &&
-                  typeof blog.thumbnailImage !== "number" &&
-                  blog.thumbnailImage.url && (
-                    <Image
-                      src={blog.thumbnailImage.url}
-                      alt={blog.title}
-                      width={480}
-                      height={192}
-                      className="h-48 w-full rounded object-cover"
-                    />
-                  )}
+                {blog.thumbnailImage && (
+                  <Image
+                    src={getImageUrl(blog.thumbnailImage) ?? ""}
+                    alt={blog.title}
+                    width={480}
+                    height={192}
+                    className="h-48 w-full rounded object-cover"
+                  />
+                )}
                 <div className="flex flex-col gap-2">
                   <h2 className="font-semibold text-2xl text-secondary-foreground">{blog.title}</h2>
                   {blog.shortDescription && (

@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { IconBadge } from "@/components/icon-badge";
-import { cn } from "@/lib/utils";
+import { cn, getImageUrl } from "@/lib/utils";
 import type { SiteInfo as SiteInfoType } from "@/payload/types";
 
 type ServicesSectionProps = {
@@ -102,12 +102,7 @@ export function ServicesSection({ siteInfo }: ServicesSectionProps) {
                 )}
               >
                 <Image
-                  src={
-                    typeof siteInfo.services.services[activeCard]?.illustration === "number"
-                      ? `/api/media/${siteInfo.services.services[activeCard]?.illustration}`
-                      : (siteInfo.services.services[activeCard]?.illustration?.url ??
-                        "/placeholder.svg")
-                  }
+                  src={getImageUrl(siteInfo.services.services[activeCard]?.illustration) ?? ""}
                   alt={siteInfo.services.services[activeCard]?.title ?? ""}
                   fill
                   className="h-full w-full object-cover"
