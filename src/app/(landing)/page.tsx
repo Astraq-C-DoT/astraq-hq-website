@@ -25,9 +25,19 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function Page() {
   const payload = await getPayload({ config });
 
-  const [company, siteInfo] = await Promise.all([
+  const [company, siteInfo, productsResult] = await Promise.all([
     payload.findGlobal({ slug: "company" }),
     payload.findGlobal({ slug: "siteInfo" }),
+    payload.find({
+      collection: "products",
+      where: {
+        publishedAt: {
+          less_than_equal: new Date().toISOString(),
+        },
+      },
+      sort: "-publishedAt",
+      limit: 3,
+    }),
   ]);
 
   const organizationSchema: Organization = {
@@ -93,7 +103,7 @@ export default async function Page() {
     <>
       <div className="flex w-full flex-col items-center justify-start px-2 pt-16 pr-0 pb-8 pl-0 sm:px-4 sm:pt-20 sm:pr-0 sm:pb-12 sm:pl-0 md:px-8 md:pt-24 md:pb-16 lg:px-0 lg:pt-28">
         <HeroSection company={company} siteInfo={siteInfo} />
-        <ProductsSection />
+        <ProductsSection products={productsResult.docs} />
         <BackedBySection siteInfo={siteInfo} />
         <ServicesSection siteInfo={siteInfo} />
         <FAQSection siteInfo={siteInfo} />
